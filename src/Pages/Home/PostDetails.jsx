@@ -85,8 +85,8 @@ console.log('error')      });
     <span className="label-text">Comment</span>
   </label>
   <label className="input-group">
-    <input type="text" name='comment' placeholder="enter your comment" className="input input-bordered h-[70px] w-[500px]" />
-    <button type='submit' className='bg-green-500 w-24 '>Send</button>
+    <input type="text" name='comment' placeholder="enter your comment" className="input input-bordered h-[70px] lg:w-[500px] md:w-[500px]" />
+    <button type='submit' className='bg-green-500 w-24 p-6 '>Send</button>
   </label>
 </form>
 <h3 className='text-xl font-bold mt-9 mb-3'>Total Comment:{comment.length} </h3>

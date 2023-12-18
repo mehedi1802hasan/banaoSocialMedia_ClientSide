@@ -110,7 +110,7 @@ const Login = () => {
       </div>
     </div>
   </form>
-  <div className='text-right flex justify-center'>
+  <div className='text-right flex justify-center mt-0 md:-mt-10 lg:-mt-10'>
   <i>Are you forget password? please<button onClick={handleResetPassword} className='btn btn-link'> reset password</button></i>
 </div>
 
