@@ -7,7 +7,7 @@ import { AuthContext } from '../../Authentication/Provider';
 // import { FaFolderPlus } from 'react-icons/fa';
 // import { Fade } from 'react-awesome-reveal';
 import { TypeAnimation } from 'react-type-animation';
-const UploadSection = () => {
+const UploadSection = ({fetchComments}) => {
     const { user } = useContext(AuthContext);
     const [dateTime, setDateTime] = useState(new Date());
     const formRef = useRef(null); 
@@ -38,7 +38,7 @@ const UploadSection = () => {
                     time,
                 };
                 console.log(addMedia);
-                fetch('http://localhost:3000/media', {
+                fetch(' https://banao-social-media-server-one.vercel.app/media', {
                     method: "POST",
                     headers: {
                         'content-type': 'application/json',
@@ -54,6 +54,9 @@ const UploadSection = () => {
                             text: 'Your media Successfully Posted',
                             icon: 'success',
                             confirmButtonText: 'Done'
+                        }).then(() => {
+                            // Call fetchComments after the Swal popup is closed
+                            fetchComments();
                         });
                     }
                 });

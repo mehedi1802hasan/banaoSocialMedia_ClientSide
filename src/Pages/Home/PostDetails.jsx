@@ -8,18 +8,14 @@ const PostDetails = () => {
     const {user} =useContext(AuthContext)
     const loader=useLoaderData();
     const _id=loader._id;
-    // useEffect(()=>{
-    //     fetch('https://socile-media-server-mm0pmc2ou-mehedi1802hasan.vercel.app/comment')
-    //     .then(res=>res.json())
-    //     .then(data=>setComment(data))
-    // },[])
+  
     useEffect(() => {
       fetchComments();
   }, [_id]);
     const fetchComments = () => {
       console.log('Fetching comments for _id:', _id);
   
-      fetch(`http://localhost:3000/comment?Post_id=${_id}`)
+      fetch(`https://banao-social-media-server-one.vercel.app/comment?Post_id=${_id}`)
           .then((res) => res.json())
           .then((data) => {
               console.log('Fetched comments:', data);
@@ -42,7 +38,7 @@ const PostDetails = () => {
         
         }
       
-      fetch('http://localhost:3000/comment', {
+      fetch(' https://banao-social-media-server-one.vercel.app/comment', {
           method: 'POST',
           headers: {
               'content-type': 'application/json',

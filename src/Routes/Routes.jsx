@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         },{
           path:'/media/:id',
           element:<PrivateRoute><PostDetails></PostDetails></PrivateRoute>,
-          loader: ({ params }) => fetch(`http://localhost:3000/media/${params.id}`)
+          loader: ({ params }) => fetch(` https://banao-social-media-server-one.vercel.app/media/${params.id}`)
         }
       ]
 

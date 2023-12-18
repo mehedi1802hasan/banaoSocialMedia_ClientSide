@@ -6,8 +6,6 @@ const Home = () => {
     return (
         <div>
 <UploadSection></UploadSection> 
-
-<Media></Media>
 </div>
     );
 };

@@ -10,7 +10,7 @@ const Media = () => {
   const {user}=useContext(AuthContext)
   const [media, setMedia] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const mediaPerPage = 1; 
+  const mediaPerPage = 5; 
   const totalPages = Math.ceil(media.length / mediaPerPage);
   const getmediaForCurrentPage = () => {
     const startIndex = (currentPage - 1) * mediaPerPage;
@@ -22,7 +22,7 @@ const Media = () => {
     fetchComments()
   }, []);
   const fetchComments=()=>{
-    fetch('http://localhost:3000/media')
+    fetch('https://banao-social-media-server-one.vercel.app/media')
       .then(response => response.json())
       .then(data => {
         // Sort the data by the "time" field in descending order
@@ -44,7 +44,7 @@ const handleLike=(post)=>{
    const addLike = {
     like: currentLike + 1,
   };
-fetch(`http://localhost:3000/media/${post._id}`,{
+fetch(`https://banao-social-media-server-one.vercel.app/media/${post._id}`,{
     method:"PUT",
     headers:{
         'content-type':'application/json'
@@ -78,8 +78,8 @@ else{
 
   return (
     <div className='mx-10 mt-5 mb-4'>
-      <h3 className='text-center font-serif text-2xl font-semibold my-10'>Total Available Post: {media.length}</h3>
-      <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-y-10 '>
+      <h3 className='text-center font-serif text-2xl font-semibold my-10 '>Total Available Post: {media.length}</h3>
+      <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-y-10 mb-8'>
         {getmediaForCurrentPage().map((post, index) => (
           <div className="card w-72 bg-base-100 shadow-xl " key={index}>
             <figure>
