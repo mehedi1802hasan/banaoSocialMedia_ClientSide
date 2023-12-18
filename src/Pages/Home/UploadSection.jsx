@@ -20,7 +20,7 @@ const UploadSection = () => {
         const image = form.image.files[0];
         const formData = new FormData();
         formData.append("image", image);
-
+       
         const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_KEY}`;
         fetch(url, {
             method: "POST",
@@ -57,6 +57,8 @@ const UploadSection = () => {
                         });
                     }
                 });
+                
+
             } else {
                 window.location.href = '/login';
             }

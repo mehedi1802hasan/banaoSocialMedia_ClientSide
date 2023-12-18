@@ -3,21 +3,25 @@ import { GiSelfLove } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Authentication/Provider';
+import ResponsivePagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 
 const Media = () => {
   const {user}=useContext(AuthContext)
   const [media, setMedia] = useState([]);
-  // const [buttonDisabled, setButtonDisabled] = useState([]);
- 
+  const [currentPage, setCurrentPage] = useState(1);
+  const mediaPerPage = 1; 
+  const totalPages = Math.ceil(media.length / mediaPerPage);
+  const getmediaForCurrentPage = () => {
+    const startIndex = (currentPage - 1) * mediaPerPage;
+    const endIndex = startIndex + mediaPerPage;
+    return media.slice(startIndex, endIndex);
+  };
   useEffect(() => {
     // Fetch media data from the API link
     fetchComments()
   }, []);
   const fetchComments=()=>{
-
-
-
-
     fetch('http://localhost:3000/media')
       .then(response => response.json())
       .then(data => {
@@ -70,26 +74,13 @@ else{
 
 }
  }
-// const handleBtnDisable = (index) => {
-//   if (user) {
-//     const updatedButtonDisabled = [...buttonDisabled];
-//     updatedButtonDisabled[index] = true;
-//     setButtonDisabled(updatedButtonDisabled);
-//     // Save the updated disabled button states to localStorage
-//     localStorage.setItem('buttonDisabled', JSON.stringify(updatedButtonDisabled));
-//   } else {
-//     // Redirect to the login route or perform any other action as needed
-//     // Example of redirection to the login route:
-//     window.location.href = '/login';
-//   }
-// };
 
 
   return (
     <div className='mx-10 mt-5 mb-4'>
       <h3 className='text-center font-serif text-2xl font-semibold my-10'>Total Available Post: {media.length}</h3>
       <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-y-10 '>
-        {media.map((post, index) => (
+        {getmediaForCurrentPage().map((post, index) => (
           <div className="card w-72 bg-base-100 shadow-xl " key={index}>
             <figure>
               <img className='h-44 w-64 hover:scale-105 duration-700' src={post.imageUrl} alt="image" />
@@ -109,6 +100,11 @@ else{
           </div>
         ))}
       </div>
+      <ResponsivePagination
+        current={currentPage}
+        total={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from './Provider';
 import Swal from 'sweetalert2';
 import Navbar from '../SharedComponent/Navbar';
-import { FaGoogle } from 'react-icons/fa';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import app from './Firebase.config';
+const auth = getAuth(app);
 
 const Login = () => {
 
@@ -44,40 +46,26 @@ const Login = () => {
        })
       
     };
-    const handleGoogleLogin=()=>{
-      googleLogin()
-      .then(result=>{
-        const googlelogged=result.user;
-        
-        /////
-        const saveUser={name:googlelogged.displayName,email: googlelogged.email}
-        fetch('http://localhost:3000/users',{
-          method:"POST",
-          headers:{
-            'content-type':'application/json'
-          },
-          body:JSON.stringify(saveUser)
-        })
-        .then(res=>res.json())
-        .then(()=>{
-        
-             // navigate(from, { replace: true });
-  
-          
-        })
-        ////
-        console.log(googlelogged)
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Google Login successfully',
-          showConfirmButton: false,
-          timer: 1500
-        })
+    const emailref=useRef();
+    const passwordref=useRef()
+    const handleResetPassword=event=>{
+      const email=emailref.current.value
+      console.log(email);
+      if(!email){
+        alert('input your Email for reset your password')
+        return;
+      }
+      sendPasswordResetEmail(auth, email)
+      .then(() => {
+      alert('Great! Please check your email & reset your password')
       })
-       .catch(error=>{
-        console.log(error.message)
-       })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+
+    
     }
   
     return (
@@ -100,28 +88,32 @@ const Login = () => {
             <label className="label">
               <span className="label-text">Email</span>
             </label>
-            <input type="text" name="email" placeholder="email" className="input input-bordered" />
+            <input type="text"           ref={emailref}
+ name="email" placeholder="email" className="input input-bordered" />
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input type="password" name='password' placeholder="password" className="input input-bordered" />
+            <input type="password"           ref={passwordref}
+ name='password' placeholder="password" className="input input-bordered" />
             <label className="label">
-              <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+          
             </label>
           </div>
           <div className="form-control mt-6">
             <button className="btn  btn-warning">Login</button>
           </div>
           <h3 className='mt-3'>Already have an account? <Link className='text-blue-500 font-serif' to='/registration'>Sign Up</Link> </h3>
-          <button className="mx-auto mb-3 w-52 btn btn-warning hover:bg-orange-500" onClick={handleGoogleLogin}>
-              <FaGoogle />Google
-            </button>
+         
         </div>
       </div>
     </div>
   </form>
+  <div className='text-right flex justify-center'>
+  <i>Are you forget password? please<button onClick={handleResetPassword} className='btn btn-link'> reset password</button></i>
+</div>
+
       </div>
     );
 };

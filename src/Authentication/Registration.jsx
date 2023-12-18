@@ -13,20 +13,18 @@ const Registration = () => {
         e.preventDefault();
         setLoading(true);
         const form = e.target;
-        const name = form.name.value;
+        const username = form.username.value;
         const email = form.email.value;
         const password = form.password.value;
-        const address = form.address.value;
-        const university = form.university.value;
-        const photoURL = form.imgUrl.value;
+        
 
         try {
             // Register the user with Firebase
             await RegistrationUser(email, password);
-            const user = await updateUserProfile(name, photoURL, address, university);
+            const user = await updateUserProfile(username);
 
             // Add user information to your server
-            const saveUser = { name, email, image: photoURL , address,university };
+            const saveUser = { username, email };
             const response = await fetch('http://localhost:3000/users', {
                 method: "POST",
                 headers: {
@@ -76,9 +74,9 @@ const Registration = () => {
                             <form onSubmit={handleRegistration}>
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Name</span>
+                                        <span className="label-text">UseName</span>
                                     </label>
-                                    <input type="text" name='name' placeholder="enter your name" className="input input-bordered md:w-96" required />
+                                    <input type="text" name='username' placeholder="enter your username" className="input input-bordered md:w-96" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
@@ -92,24 +90,7 @@ const Registration = () => {
                                     </label>
                                     <input type="password" name='password' placeholder="password" className="input input-bordered md:w-96" required />
                                 </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">PhotoUrl</span>
-                                    </label>
-                                    <input type="text" name='imgUrl' placeholder="enter your photoUrl" className="input input-bordered md:w-96" required />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">Address</span>
-                                    </label>
-                                    <input type="text" name='address' placeholder="address" className="input input-bordered md:w-96" required />
-                                </div>
-                                <div className="form-control">
-                                    <label className="label">
-                                        <span className="label-text">University</span>
-                                    </label>
-                                    <input type="text" name='university' placeholder="university" className="input input-bordered md:w-96" required />
-                                </div>
+                     
                                 <div className="form-control mt-6 md:w-96">
                                     <button className="btn btn-warning" disabled={loading}>Registration</button>
                                 </div>

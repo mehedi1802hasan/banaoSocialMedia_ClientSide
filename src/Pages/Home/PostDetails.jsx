@@ -9,7 +9,7 @@ const PostDetails = () => {
     const loader=useLoaderData();
     const _id=loader._id;
     // useEffect(()=>{
-    //     fetch('http://localhost:3000/comment')
+    //     fetch('https://socile-media-server-mm0pmc2ou-mehedi1802hasan.vercel.app/comment')
     //     .then(res=>res.json())
     //     .then(data=>setComment(data))
     // },[])
